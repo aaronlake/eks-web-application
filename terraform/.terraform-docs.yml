@@ -1,0 +1,20 @@
+output:
+  file: README.md
+  mode: replace
+  template: |-
+    {{ .Content }}
+    {{- printf "\n" -}}
+
+formatter: "markdown table"
+header-from: "main.tf"
+sections:
+  show:
+    - header
+    - requirements
+    - providers
+    - inputs
+    - outputs
+
+sort:
+  enabled: true
+  by: required
