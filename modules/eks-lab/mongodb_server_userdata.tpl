@@ -43,6 +43,7 @@ mongo < /tmp/createUser.js
 rm /tmp/createUser.js
 
 sudo sed -i 's/#security:/security:\n  authorization: "enabled"/' /etc/mongod.conf
+sudo sed -i 's/  bindIp:.*$/  bindIp: 0.0.0.0/' /etc/mongod.conf
 sudo systemctl restart mongod
 
-echo "Mongo Connection string: mongodb://admin:rabbit@localhost:27017/admin"
+echo "Mongo Connection string: mongodb://admin:${mongodb_password}@localhost:27017/admin"

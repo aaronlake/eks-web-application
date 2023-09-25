@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping List</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/styles.css">
+</head>
+<body>
+
+<h1>Shopping List</h1>
+<input type="text" id="new-item" placeholder="Add item" />
+
+<ul id="shopping-list">
+</ul>
+
+<script>
+$(document).ready(function() {
+    function loadItems() {
+    $.get('/items', function(data) {
+        let parsedData = JSON.parse(data);
+        $('#shopping-list').empty();
+        parsedData.forEach(function(item) {
+            $('#shopping-list').append('<li onclick="removeItem(this)">' + item.item + '</li>');
+        });
+    });
+    }
+
+    loadItems();
+
+    $('#new-item').keypress(function(e) {
+        if (e.which == 13) { // Enter key
+            let newItem = $('#new-item').val();
+            $.ajax({
+              url: '/items',
+              type: 'POST',
+              contentType: 'application/json',
+              data: JSON.stringify({ 'item': newItem }),
+              success: function() {
+                  $('#new-item').val('');
+                  loadItems();
+              }
+            });
+        }
+    });
+
+    window.removeItem = function(element) {
+        let item = $(element).text();
+        $.ajax({
+            url: '/items/' + item,
+            type: 'DELETE',
+            success: function() {
+                loadItems();
+            }
+        });
+    }
+});
+</script>
+
+</body>
+</html>

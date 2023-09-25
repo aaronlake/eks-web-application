@@ -10,3 +10,10 @@ rule "aws_resource_missing_tags" {
     required_tags = ["Automation", "Application", "Owner", "CostCenter", "Terraform", "Repository"]
   }
 }
+
+rule "terraform_required_providers" {
+  enabled = false
+}
+rule "terraform_required_version" {
+  enabled = false
+}

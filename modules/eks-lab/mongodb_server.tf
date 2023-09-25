@@ -41,7 +41,7 @@ resource "tls_private_key" "mongodb" {
 }
 
 resource "local_file" "mongodb_private_key" {
-  filename = "${path.module}/../../../${local.env}-${local.name}-sshkey.pem"
+  filename = "${path.module}/../../${local.env}-${local.name}-sshkey.pem"
   content  = tls_private_key.mongodb.private_key_pem
 }
 
