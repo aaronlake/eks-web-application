@@ -41,7 +41,7 @@ resource "null_resource" "demo_app" {
   }
 
   provisioner "local-exec" {
-    command = "docker build -t ${aws_ecr_repository.demo_app.repository_url}:latest ${path.module}/app"
+    command = "docker buildx build --platform linux/amd64, -t ${aws_ecr_repository.demo_app.repository_url}:latest ${path.module}/app"
   }
 
   provisioner "local-exec" {
