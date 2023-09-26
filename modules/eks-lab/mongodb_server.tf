@@ -66,6 +66,7 @@ resource "aws_instance" "mongodb" {
     mongodb_major    = local.mongo_major
     mongodb_minor    = local.mongo_minor
     hostname         = local.mongodb_hostname
+    s3_bucket        = aws_s3_bucket.mongo_dumps.id
   })
 
   tags = merge(

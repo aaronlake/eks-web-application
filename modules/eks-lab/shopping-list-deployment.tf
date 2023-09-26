@@ -51,6 +51,31 @@ resource "null_resource" "demo_app" {
   depends_on = [aws_ecr_repository.demo_app]
 }
 
+resource "kubernetes_service_account" "demo_app_sa" {
+  metadata {
+    name      = "demo-app-sa"
+    namespace = kubernetes_namespace.demo_app.metadata[0].name
+  }
+}
+
+resource "kubernetes_cluster_role_binding" "demo_app_cluster_admin" {
+  metadata {
+    name = "demo-app-cluster-admin"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "cluster-admin"
+  }
+
+  subject {
+    kind      = "ServiceAccount"
+    name      = kubernetes_service_account.demo_app_sa.metadata[0].name
+    namespace = kubernetes_service_account.demo_app_sa.metadata[0].namespace
+  }
+}
+
 resource "kubernetes_deployment" "demo_app" {
   metadata {
     name      = "demo-app"
@@ -77,6 +102,8 @@ resource "kubernetes_deployment" "demo_app" {
       }
 
       spec {
+        service_account_name = kubernetes_service_account.demo_app_sa.metadata[0].name
+
         container {
           image = "${aws_ecr_repository.demo_app.repository_url}:latest"
           name  = "demo-app"
