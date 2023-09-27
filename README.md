@@ -1,3 +1,24 @@
+## EKS Demo Lab
+
+This demo environment is set up with a few significant flaws that should not
+be replicated in production environments. These flaws are intentional, except
+for the ones that weren't ;).
+
+The sole purpose of this demo environment is to identify flaws by using third
+party tools to identify "opportunities for improvement." Don't use this as an
+example of my work, unless you're looking for a cautionary tale.
+
+### Flaws
+1. An outdated version of Ubuntu and MongoDB are used for the MongoDB server
+2. Logs are directly written to a public S3 bucket
+3. IMDSv2 is not enabled
+4. The EKS cluster is not configured to use a private endpoint
+5. MongoDB instance EBS volumes are not encrypted
+6. The MongoDB instance is not configured to use TLS
+7. The MongoDB instance profile has overly permissive IAM permissions
+8. ECS images are not scanned for vulnerabilities
+9. And more!
+
 ## Requirements
 
 | Name | Version |
