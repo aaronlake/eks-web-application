@@ -41,7 +41,7 @@ resource "null_resource" "demo_app" {
   }
 
   provisioner "local-exec" {
-    command = "docker buildx build --platform linux/amd64, -t ${aws_ecr_repository.demo_app.repository_url}:latest ${path.module}/app"
+    command = "docker buildx build --platform linux/amd64 -t ${aws_ecr_repository.demo_app.repository_url}:latest ${path.module}/app"
   }
 
   provisioner "local-exec" {
@@ -116,6 +116,8 @@ resource "kubernetes_deployment" "demo_app" {
       }
     }
   }
+
+  depends_on = [null_resource.demo_app]
 }
 
 resource "kubernetes_service" "demo_app" {
