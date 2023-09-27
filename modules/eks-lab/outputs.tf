@@ -27,3 +27,8 @@ output "ssh_key_filename" {
   value       = local_file.mongodb_private_key.filename
   description = "MongoDB SSH command"
 }
+
+output "lb_hostname" {
+  value       = kubernetes_service.demo_app.status[0].load_balancer[0].ingress[0].hostname
+  description = "Demo app load balancer hostname"
+}

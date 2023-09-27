@@ -27,3 +27,8 @@ output "mongo_ssh_key_location" {
   value       = module.eks_lab.ssh_key_filename
   description = "MongoDB SSH command"
 }
+
+output "lb_hostname" {
+  value       = module.eks_lab.lb_hostname
+  description = "Demo app load balancer hostname"
+}
