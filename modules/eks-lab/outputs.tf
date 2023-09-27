@@ -19,7 +19,7 @@ output "mongodb_password" {
 }
 
 output "mongodb_connection_string" {
-  value       = "mongodb://admin:${random_pet.mongodb_password.id}@${aws_instance.mongodb.private_ip}:27017?authSource=admin"
+  value       = "mongodb://admin:${random_pet.mongodb_password.id}@${aws_instance.mongodb.private_ip}:27017/?authSource=admin"
   description = "MongoDB connection string"
 }
 
