@@ -9,8 +9,6 @@ app = Flask(__name__)
 try:
     with open("/etc/secrets/mongo-endpoint", "r", encoding="utf8") as f:
         CONNECTION_STRING = f.read().strip()
-    client = MongoClient(CONNECTION_STRING, serverSelectionTimeoutMS=5000)
-    client.server_info()
 except (FileNotFoundError, ServerSelectionTimeoutError):
     CONNECTION_STRING = os.environ.get("CONNECTION_STRING", "localhost:27017")
 
